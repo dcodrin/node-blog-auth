@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+  body
+    nav.navbar.navbar-inverse.navbar-fixed-top
+      .container
+        .navbar-header
+          button(type='button', class='navbar-toggle collapsed', data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar")
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') Node Blog
+        #navbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            if user
+              li(class=(title === 'Members' ? 'active' : ''))
+                a(href='/') Members
+            if !user
+              li(class=(title === 'Register' ? 'active' : ''))
+                a(href='/users/register') Register
+              li(class=(title === 'Login' ? 'active' : ''))
+                a(href='/users/login') Login
+          if user
+            ul.nav.navbar-nav.navbar-right
+              li(class='')
+                a(href='/users/logout') Logout
+
+    .container
+      != messages()
+      block content
+
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")
+    script(src="/javascripts/bootstrap.min.js")
+    script(src='/javascripts/main.js')

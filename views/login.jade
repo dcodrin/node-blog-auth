@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h2.page-header #{title}
+    p Please login to view and create posts
+    form(method='post', action='/users/login')
+        fieldset.form-group
+            label Username
+            input.form-control(name='username', type='text', placeholder='Username')
+        fieldset.form-group
+            label Password
+            input.form-control(name='password', type='password', placeholder='Password')
+        button(type='submit', class='btn btn-primary') Login
