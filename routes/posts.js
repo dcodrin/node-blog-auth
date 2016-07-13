@@ -28,6 +28,16 @@ router.get('/add', ensureAuthenticated, function (req, res, next) {
     });
 });
 
+router.get('/show/:id', ensureAuthenticated, function (req, res, next) {
+    Post.Post.findById(req.params.id, function (err, post) {
+        if(err) {
+            console.log(err);
+        } else {
+            res.render('showpost', {title: post.title, post});
+        }
+    });
+});
+
 /* POST POSTS */
 router.post('/add', ensureAuthenticated, upload.single('main_image'), function (req, res, next) {
     var {title, category, body, author} = req.body;

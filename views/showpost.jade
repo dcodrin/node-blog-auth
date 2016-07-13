@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    .post.panel.panel-default
+        .panel-heading
+            h1=post.title
+        .panel-body
+            p.meta Posted by #{post.author} on #{moment(post.date).format('MM-DD-YYYY')}
+            img.thumbnail.post-img(src='/postUploads/#{post.mainImage}')
+            // the != parses the html inside body
+            !=post.body
+            .meta.panel-footer
+                .categories
+                    |Categories
+                    br
+                    each category, i in post.categories
+                        a.category(href='/categories/show/#{category}') #{category}
