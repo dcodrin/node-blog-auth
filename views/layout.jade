@@ -17,8 +17,14 @@ html
         #navbar.collapse.navbar-collapse
           ul.nav.navbar-nav
             if user
-              li(class=(title === 'Members' ? 'active' : ''))
-                a(href='/') Members
+              li(class=(title === 'Posts' ? 'active' : ''))
+                a(href='/') All Posts
+              li(class=(title === 'Add Post' ? 'active' : ''))
+                a(href='/posts/add') Add Post
+              li(class=(title === 'Add Category' ? 'active' : ''))
+                a(href='/categories/add') Add Category
+              li(class=(title === 'All Categories' ? 'active' : ''))
+                a(href='/categories') View Categories
             if !user
               li(class=(title === 'Register' ? 'active' : ''))
                 a(href='/users/register') Register
@@ -29,9 +35,12 @@ html
               li(class='')
                 a(href='/users/logout') Logout
 
-    .container
+    .container.flex-grail
+      // the != will parse the html returned by messages()
       != messages()
       block content
+    footer
+      p NodeBlog &copy; 2016
 
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js")
     script(src="/javascripts/bootstrap.min.js")

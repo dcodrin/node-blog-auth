@@ -1,5 +1,23 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title} area
+  img.logo(src='/images/nodebloglogo.png')
+  if posts
+    each post, i in posts
+      .post.panel.panel-default
+        .panel-heading
+          h1
+            a(href='/posts/show/#{post._id}')
+            =post.title
+        .panel-body
+          p.meta Posted by #{post.author} on #{moment(post.date).format('MM-DD-YYYY')}
+          img.thumbnail.post-img(src='/postUploads/#{post.mainImage}')
+          // the != parses the html inside body
+          !=truncateText(post.body, 300)
+          .meta.panel-footer
+            a.more(href='/posts/show/#{post._id}}') Read more
+            .categories
+              |Categories
+              br
+              each category, i in post.categories
+                a.category(href='/categories/show/#{category}') #{category}

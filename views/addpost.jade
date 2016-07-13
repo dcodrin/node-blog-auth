@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    h2.page-header #{title}
+    if errors
+        each error, i in errors
+            div.alert.alert-danger #{error.msg}
+    form(method='post', action='/posts/add', enctype='multipart/form-data')
+        fieldset.form-group
+            label Title
+            input.form-control(name='title', type='text', placeholder='Title')
+        fieldset.form-group
+            label Category
+            select.form-control(name='category')
+                if categories
+                    each category, i in categories
+                        option(value='#{category}') #{category}
+        fieldset.form-group
+            label Body
+            textarea.form-control(name='body', placeholder='Post Body')
+        fieldset.form-group
+            label Main Image
+            input.form-control(name='main_image', type='file')
+        fieldset.form-group
+            label Author
+            select.form-control(name='author')
+                option(value='#{user.username}') #{user.username}
+                option(value='Anonymous') Anonymous
+        button(type='submit', class='btn btn-primary') Post
+    script(src='/ckeditor/ckeditor.js')
+    script
+        | CKEDITOR.replace('body');

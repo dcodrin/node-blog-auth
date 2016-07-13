@@ -6,16 +6,19 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     passport = require('passport'),
-    mongodb = require('mongodb'),
-    mongoose = require('mongoose'),
+    moment = require('moment'),
     validator = require('express-validator'),
     flash = require('connect-flash'),
     expressMessages = require('express-messages');
 
+// db connection
+var db = require('./db/mongodb.js');
 
 // routes
 var routes = require('./routes/index'),
-    users = require('./routes/users');
+    users = require('./routes/users'),
+    categories = require('./routes/categories'),
+    posts = require('./routes/posts');
 
 // express app
 var app = express();
@@ -55,6 +58,10 @@ app.use(validator({
         };
     }
 }));
+app.locals.moment = moment;
+app.locals.truncateText = function(text, length) {
+    return text.substring(0, length) + '...';
+};
 app.use(flash());
 app.use(function (req, res, next) {
     res.locals.messages = expressMessages(req, res);
@@ -68,6 +75,8 @@ app.get('*', function(req, res, next) {
 });
 app.use('/', routes);
 app.use('/users', users);
+app.use('/posts', posts);
+app.use('/categories', categories);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

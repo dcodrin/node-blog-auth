@@ -1,15 +1,11 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
 var uniqueValidator = require('mongoose-unique-validator');
 var bcrypt = require('bcryptjs');
 
-
-mongoose.connect('mongodb://localhost/nodeauth');
-
-var db = mongoose.connection;
-
 // user schema
 
-var UserSchema = mongoose.Schema({
+var UserSchema = Schema({
     username: {
         type: String,
         unique: true,
