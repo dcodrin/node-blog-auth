@@ -15,3 +15,30 @@ block content
                     br
                     each category, i in post.categories
                         a.category(href='/categories/show/#{category}') #{category}
+            br
+            if (post.comments && post.comments.length > 0)
+                .panel.panel-default
+                .panel-heading
+                    h3 Comments
+                .panel-body
+                    each comment, i in post.comments
+                       .comment.panel.panel-primary
+                           .panel-body
+                               p.comment-name #{comment.text}
+                               p.comment-body.label.label-primary Posted by: #{comment.postedBy}
+            br
+            .panel.panel-default
+                .panel-heading
+                    h3 Add comment
+                    if errors
+                        each error, i in errors
+                            div.alert.alert-danger #{error.msg}
+                .panel-body
+                    form(method='post', action='/posts/addcomment')
+                        input(name='postid', type='hidden', value='#{post._id}')
+                        input(name='author', type='hidden', value='#{user.username}')
+                        fieldset.form-group
+                            label Body
+                            textarea.form-control(name='body', placeholder='Comment')
+                        br
+                        button.btn.btn-primary(type='submit') Add Commment

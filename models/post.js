@@ -20,6 +20,10 @@ var PostSchema = Schema({
     mainImage: {
         type: String
     },
+    comments: [{
+        text: String,
+        postedBy: String
+    }],
     categories: Array
 });
 

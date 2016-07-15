@@ -78,4 +78,43 @@ router.post('/add', ensureAuthenticated, upload.single('main_image'), function (
     }
 });
 
+router.post('/addcomment', ensureAuthenticated, function (req, res, next) {
+    var {body, author} = req.body;
+    var commentDate = new Date();
+
+    console.log(body, author);
+    // form validation
+    req.checkBody('body', 'Comment can\'t be blank').notEmpty();
+
+    // check errors
+    var errors = req.validationErrors();
+
+    if (errors) {
+        res.render('addpost', {errors});
+    } else {
+
+        Post.getPostById(req.body.postid, function(err, post){
+            if(err) {
+                console.log(err);
+            } else {
+                var newComment = {
+                    text: body,
+                    postedBy: author
+                };
+
+                post.comments.push(newComment);
+                post.save(function(err, post){
+                    if(err){
+                        console.log(err);
+                    } else {
+                        console.log(post);
+                        req.flash('success', 'Comment added.');
+                        res.redirect('/posts/show/' + post._id);
+                    }
+                });
+            }
+        });
+    }
+});
+
 module.exports = router;
